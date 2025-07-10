@@ -1,0 +1,89 @@
+@model IEnumerable<ProManagementSystem.Models.Entities.Module>
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Professional Management System Dashboard</h1>
+        <p class="lead">Welcome to your comprehensive management platform. Navigate through modules to manage your system efficiently.</p>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var module in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="@module.Icon fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">@module.Name</h5>
+                    <p class="card-text">@module.Description</p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="row">
+                        @foreach (var subModule in module.SubModules.OrderBy(sm => sm.SortOrder))
+                        {
+                            <div class="col-12 mb-2">
+                                <a href="@subModule.Url" class="btn btn-outline-primary btn-sm w-100">
+                                    <i class="@subModule.Icon me-1"></i> @subModule.Name
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <h4>No Modules Available</h4>
+                <p>No active modules found. Please contact your administrator to set up modules.</p>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Stats</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="border-end">
+                            <h3 class="text-primary">@Model.Count()</h3>
+                            <p class="mb-0">Total Modules</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-end">
+                            <h3 class="text-success">@Model.Sum(m => m.SubModules.Count)</h3>
+                            <p class="mb-0">Sub Modules</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="border-end">
+                            <h3 class="text-warning">@Model.Count(m => m.IsActive)</h3>
+                            <p class="mb-0">Active Modules</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h3 class="text-info">@DateTime.Now.ToString("MMM dd, yyyy")</h3>
+                        <p class="mb-0">Today's Date</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

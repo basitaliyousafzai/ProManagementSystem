@@ -1,0 +1,66 @@
+@model ProManagementSystem.Models.Entities.Permission
+
+@{
+    ViewData["Title"] = "Delete Permission";
+}
+
+<h1>Delete Permission</h1>
+
+<h3 class="text-danger">Are you sure you want to delete this permission?</h3>
+<div class="alert alert-warning">
+    <strong>Warning:</strong> This action cannot be undone. Deleting this permission will also remove it from all roles that currently have it assigned.
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Permission Information</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                Module
+            </dt>
+            <dd class="col-sm-10">
+                <i class="@Model.SubModule.Module.Icon me-1"></i>
+                @Model.SubModule.Module.Name
+            </dd>
+            <dt class="col-sm-2">
+                Sub Module
+            </dt>
+            <dd class="col-sm-10">
+                <i class="@Model.SubModule.Icon me-1"></i>
+                @Model.SubModule.Name
+            </dd>
+            <dt class="col-sm-2">
+                Status
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.IsActive)
+                {
+                    <span class="badge bg-success">Active</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Inactive</span>
+                }
+            </dd>
+        </dl>
+
+        <form asp-action="Delete" class="mt-3">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Delete Permission" class="btn btn-danger" onclick="return confirm('Are you absolutely sure you want to delete this permission?');" />
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

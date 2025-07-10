@@ -1,0 +1,103 @@
+@model IEnumerable<ProManagementSystem.Models.Entities.SubModule>
+
+@{
+    ViewData["Title"] = "Sub Modules";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fa-solid fa-cube"></i> Sub Modules Management</h1>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i> Add New Sub Module
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Module</th>
+                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                        <th>@Html.DisplayNameFor(model => model.Description)</th>
+                        <th>@Html.DisplayNameFor(model => model.Icon)</th>
+                        <th>@Html.DisplayNameFor(model => model.Url)</th>
+                        <th>Status</th>
+                        <th>Sort Order</th>
+                        <th>Permissions</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <i class="@item.Module.Icon me-1"></i>
+                                @item.Module.Name
+                            </td>
+                            <td>
+                                <i class="@item.Icon me-1"></i>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Icon))
+                                {
+                                    <i class="@item.Icon"></i>
+                                }
+                                @Html.DisplayFor(modelItem => item.Icon)
+                            </td>
+                            <td>
+                                <code>@Html.DisplayFor(modelItem => item.Url)</code>
+                            </td>
+                            <td>
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Inactive</span>
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.SortOrder)</td>
+                            <td>
+                                <span class="badge bg-info">@item.Permissions.Count</span>
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center">
+        <h4>No Sub Modules Found</h4>
+        <p>No sub modules have been created yet. Click "Add New Sub Module" to create your first sub module.</p>
+    </div>
+}

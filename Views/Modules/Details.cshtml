@@ -1,0 +1,102 @@
+@model ProManagementSystem.Models.Entities.Module
+
+@{
+    ViewData["Title"] = "Module Details";
+}
+
+<h1>Module Details</h1>
+
+<div>
+    <h4>Module Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Icon)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.Icon))
+            {
+                <i class="@Model.Icon"></i> @Html.DisplayFor(model => model.Icon)
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Icon)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SortOrder)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SortOrder)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UpdatedAt)
+        </dd>
+    </dl>
+</div>
+
+@if (Model.SubModules.Any())
+{
+    <div class="mt-4">
+        <h4>Sub Modules</h4>
+        <hr />
+        <div class="row">
+            @foreach (var subModule in Model.SubModules.OrderBy(sm => sm.SortOrder))
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                @if (!string.IsNullOrEmpty(subModule.Icon))
+                                {
+                                    <i class="@subModule.Icon"></i>
+                                }
+                                @subModule.Name
+                            </h5>
+                            <p class="card-text">@subModule.Description</p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    URL: @subModule.Url<br />
+                                    Active: @(subModule.IsActive ? "Yes" : "No")<br />
+                                    Sort Order: @subModule.SortOrder
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

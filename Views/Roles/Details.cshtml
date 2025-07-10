@@ -1,0 +1,97 @@
+@model ProManagementSystem.Models.Entities.Role
+
+@{
+    ViewData["Title"] = "Role Details";
+}
+
+<h1>Role Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Role Information</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                Status
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.IsActive)
+                {
+                    <span class="badge bg-success">Active</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Inactive</span>
+                }
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.CreatedAt.ToString("MMM dd, yyyy hh:mm tt")
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.UpdatedAt.ToString("MMM dd, yyyy hh:mm tt")
+            </dd>
+        </dl>
+    </div>
+</div>
+
+@if (Model.RolePermissions.Any())
+{
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4>Assigned Permissions</h4>
+            <hr />
+            <div class="row">
+                @foreach (var rolePermission in Model.RolePermissions.OrderBy(rp => rp.Permission.SubModule.Module.Name).ThenBy(rp => rp.Permission.SubModule.Name))
+                {
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-info">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="@rolePermission.Permission.SubModule.Module.Icon me-1"></i>
+                                    @rolePermission.Permission.SubModule.Module.Name
+                                </h6>
+                                <p class="card-text">
+                                    <strong>
+                                        <i class="@rolePermission.Permission.SubModule.Icon me-1"></i>
+                                        @rolePermission.Permission.SubModule.Name
+                                    </strong><br/>
+                                    <small class="text-muted">@rolePermission.Permission.Name</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info mt-4">
+        <h4>No Permissions Assigned</h4>
+        <p>This role currently has no permissions assigned to it.</p>
+    </div>
+}
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

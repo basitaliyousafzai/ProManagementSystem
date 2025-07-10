@@ -1,0 +1,107 @@
+@model ProManagementSystem.Models.Entities.Permission
+
+@{
+    ViewData["Title"] = "Permission Details";
+}
+
+<h1>Permission Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Permission Information</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                Module
+            </dt>
+            <dd class="col-sm-10">
+                <i class="@Model.SubModule.Module.Icon me-1"></i>
+                @Model.SubModule.Module.Name
+            </dd>
+            <dt class="col-sm-2">
+                Sub Module
+            </dt>
+            <dd class="col-sm-10">
+                <i class="@Model.SubModule.Icon me-1"></i>
+                @Model.SubModule.Name
+            </dd>
+            <dt class="col-sm-2">
+                Status
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.IsActive)
+                {
+                    <span class="badge bg-success">Active</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Inactive</span>
+                }
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.CreatedAt.ToString("MMM dd, yyyy hh:mm tt")
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.UpdatedAt.ToString("MMM dd, yyyy hh:mm tt")
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h4>Module Hierarchy</h4>
+        <hr />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <i class="@Model.SubModule.Module.Icon me-1"></i>
+                    @Model.SubModule.Module.Name
+                </li>
+                <li class="breadcrumb-item">
+                    <i class="@Model.SubModule.Icon me-1"></i>
+                    @Model.SubModule.Name
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fa-solid fa-key me-1"></i>
+                    @Model.Name
+                </li>
+            </ol>
+        </nav>
+        <div class="card border-info">
+            <div class="card-body">
+                <h5 class="card-title">Permission Scope</h5>
+                <p class="card-text">@Model.Description</p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        This permission applies to the "@Model.SubModule.Name" functionality 
+                        within the "@Model.SubModule.Module.Name" module.
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
