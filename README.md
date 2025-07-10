@@ -37,7 +37,7 @@ Ensure you have the following installed:
 ### Installation
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-repo/ProManagementSystem.git
+   git clone https://github.com/basitaliyousafzai/ProManagementSystem.git
    cd ProManagementSystem
    ```
 
@@ -139,7 +139,7 @@ The system provides full CRUD operations through MVC controllers:
 Contributions are welcome! Please feel free to submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the BASIT ALI License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 For support, email support@promanagementsystem.com or create an issue in the repository.
